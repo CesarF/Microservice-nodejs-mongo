@@ -5,10 +5,10 @@ var express        = require("express"),
     mongoose       = require('mongoose'),
     requestify     = require("requestify");
 
-  mongoose.connect('mongodb://ec2-54-164-141-121.compute-1.amazonaws.com:27017/kml_db', function(err, res) {
+mongoose.connect('mongodb://' + IP_MONGO + '/kml_db', function(err, res) {
     if(err) throw err;
     console.log('Connected to Database');
-  });
+});
 // Middlewares
 //app.use(cors);
 var allowCrossDomain = function(req, res, next) {
@@ -24,7 +24,7 @@ app.use(methodOverride());
 app.use(allowCrossDomain);
 
 //Register app to api gateway
-const apiGatewayUrl = "http://localhost:3002/apps";
+const apiGatewayUrl = IP_GATEWAY + "/apps";
 requestify.request(apiGatewayUrl, {
     method: "POST",
     body: {
